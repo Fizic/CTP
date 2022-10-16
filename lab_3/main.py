@@ -38,12 +38,22 @@ class Projectile:
         time = (self.v0 * sin(angle) + sqrt(self.v0 ** 2 * sin(angle) ** 2 + 2 * 10 * self.height)) / 10
         return self.v0 * cos(angle) * time
 
+    def create_schedule_distance_versus_angle(self):
+        """
+        Method for creating schedule of the distance versus angle
+        :return:
+        """
+        angles = [radians(angle) for angle in range(0, 90)]
+        distances = [self.get_distance(angle) for angle in angles]
+        plt.plot(angles, distances)
+        plt.show()
 
-project = Projectile(200, 70)
+projectile = Projectile(200, 70)
 max_d, angle_d = 0, 0
-for i in range(0, 90000):
-    if project.get_distance(radians(i / 1000)) > max_d:
-        max_d = project.get_distance(radians(i / 1000))
-        angle_d = i / 1000
+for angle in range(0, 90):
+    if projectile.get_distance(radians(angle)) > max_d:
+        max_d = projectile.get_distance(radians(angle))
+        angle_d = angle
 
 print(f'Max distance: {max_d}, angle: {angle_d}')
+projectile.create_schedule_distance_versus_angle()
