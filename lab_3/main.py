@@ -8,13 +8,7 @@ class Projectile:
         self.v0 = v0
         self.height = height
 
-    def create_schedule(self, angle: float):
-        """
-        Method for creating schedule of the projectile
-        :param angle: Shot Angle
-        :return:
-        """
-        # Create lists for coordinates in different time
+    def get_coordinates(self, angle: float):
         coords_x = []
         coords_y = []
         # We fill in the coordinates for every 1 second
@@ -25,8 +19,27 @@ class Projectile:
             coords_y.append(y_now)
             time += 0.01
             y_now = self.height + self.v0 * sin(angle) * time - 10 * time ** 2 / 2
+        return coords_x, coords_y
 
+    def create_schedule(self, angle: float):
+        """
+        Method for creating schedule of the projectile
+        :param angle: Shot Angle
+        :return:
+        """
+        # Create lists for coordinates in different time
+
+        coords_x, coords_y = self.get_coordinates(angle)
         plt.plot(coords_x, coords_y)
+        plt.show()
+
+    def create_multi_schedule(self):
+        all_coords = []
+        for i in range(0, 90, 10):
+            coords_x, coords_y = self.get_coordinates(radians(i))
+            all_coords.append(coords_x)
+            all_coords.append(coords_y)
+        plt.plot(*all_coords)
         plt.show()
 
     def get_distance(self, angle: float):
@@ -43,12 +56,21 @@ class Projectile:
         Method for creating schedule of the distance versus angle
         :return:
         """
-        angles = [radians(angle) for angle in range(0, 90)]
-        distances = [self.get_distance(angle) for angle in angles]
+        angles = [angle for angle in range(0, 90)]
+        distances = [self.get_distance(radians(angle)) for angle in angles]
         plt.plot(angles, distances)
         plt.show()
 
+    def create_schedule_distance_versus_v0(self):
+        angles = [angle for angle in range(0, 90)]
+        distances = [self.get_distance(radians(angle)) for angle in angles]
+        plt.plot(distances, angles)
+        plt.show()
+
+
 projectile = Projectile(200, 70)
+projectile.create_schedule(radians(58))
+projectile.create_multi_schedule()
 max_d, angle_d = 0, 0
 for angle in range(0, 90):
     if projectile.get_distance(radians(angle)) > max_d:
@@ -57,3 +79,5 @@ for angle in range(0, 90):
 
 print(f'Max distance: {max_d}, angle: {angle_d}')
 projectile.create_schedule_distance_versus_angle()
+shooter = Projectile(300, 0)
+shooter.create_schedule_distance_versus_v0()
