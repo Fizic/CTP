@@ -19,6 +19,8 @@ class SpringPendulum:
     def plot_x_versus_time(self) -> None:
         times = [time / 100 for time in range(2800)]
         values = [self.get_x_by_t(time) for time in times]
+        print(max(values))
+        print(sum(values) / len(values))
         plt.grid(True)
         plt.plot(times, values)
         plt.show()

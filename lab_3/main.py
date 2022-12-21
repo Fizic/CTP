@@ -30,6 +30,7 @@ class Projectile:
         # Create lists for coordinates in different time
 
         coords_x, coords_y = self.get_coordinates(angle)
+        plt.grid(True)
         plt.plot(coords_x, coords_y)
         plt.show()
 
@@ -39,6 +40,9 @@ class Projectile:
             coords_x, coords_y = self.get_coordinates(radians(i))
             all_coords.append(coords_x)
             all_coords.append(coords_y)
+
+        plt.xlim(0)
+        plt.ylim(0)
         plt.plot(*all_coords)
         plt.show()
 
@@ -70,14 +74,14 @@ class Projectile:
 
 projectile = Projectile(200, 70)
 projectile.create_schedule(radians(58))
-projectile.create_multi_schedule()
-max_d, angle_d = 0, 0
-for angle in range(0, 90):
-    if projectile.get_distance(radians(angle)) > max_d:
-        max_d = projectile.get_distance(radians(angle))
-        angle_d = angle
-
-print(f'Max distance: {max_d}, angle: {angle_d}')
-projectile.create_schedule_distance_versus_angle()
-shooter = Projectile(300, 0)
-shooter.create_schedule_distance_versus_v0()
+# projectile.create_multi_schedule()
+# max_d, angle_d = 0, 0
+# for angle in range(0, 90):
+#     if projectile.get_distance(radians(angle)) > max_d:
+#         max_d = projectile.get_distance(radians(angle))
+#         angle_d = angle
+#
+# print(f'Max distance: {max_d}, angle: {angle_d}')
+# projectile.create_schedule_distance_versus_angle()
+# shooter = Projectile(300, 0)
+# shooter.create_schedule_distance_versus_v0()
