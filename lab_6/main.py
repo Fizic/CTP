@@ -71,7 +71,7 @@ class ElectricalCircuit:
         for r in range(int(self.rheostat.min_r * 100), int(self.rheostat.max_r * 100)):
             self.rheostat.change_resistance(r / 100)
             amperages.append(self.get_amperage())
-            efficiencyes.append(self.get_voltage())
+            efficiencyes.append(self.get_efficiency())
         plt.grid(True)
         plt.plot(amperages, efficiencyes)
         plt.show()
